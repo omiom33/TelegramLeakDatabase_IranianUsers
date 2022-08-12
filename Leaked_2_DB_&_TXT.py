@@ -35,7 +35,11 @@ class databaseTel:
                 if "\"message\"" in line:
                     try:
                         exe = {}
-                        exec("thisLine = " + f"{line.replace('true', 'True').replace('false', 'False')}", exe)
+                        exec(
+                            f"thisLine = {line.replace('true', 'True').replace('false', 'False')}",
+                            exe,
+                        )
+
                         self.myLines.append(exe['thisLine'])
                     except SyntaxError:
                         self.excepts.append(line)
@@ -58,9 +62,7 @@ class databaseTel:
             stdout.write(f'\rCollect Data Count: {x+1}/{counter}')
             id = self.myLines[x]['id']
 
-            info = {}
-            info["id"] = id
-            info["phone"] = int(self.myLines[x]['phone'])
+            info = {"id": id, "phone": int(self.myLines[x]['phone'])}
             if "username" in self.myLines[x]['message']: info["username"] = f"@{self.myLines[x]['message']['username']}"
 
             self.data.append(info)
